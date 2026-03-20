@@ -1,0 +1,40 @@
+apply plugin: 'java'
+
+group = 'com.kazthegreat.wurm'
+version = '1.0.0'
+
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compileOnly files('libs/modlauncher.jar')
+    compileOnly files('libs/javassist.jar')
+    // Server classes are available at runtime via the modloader classloader
+    // We don't need them at compile time — our code references them as strings
+    // in Javassist source, not as direct imports
+}
+
+jar {
+    archiveName = 'combinelimit.jar'
+}
+
+// Build a distributable zip that can be dropped into a WU server's mods/ folder
+task dist(type: Zip) {
+    into('mods') {
+        into('combinelimit') {
+            from jar
+        }
+        from('src/main/resources') {
+            include 'combinelimit.properties'
+        }
+    }
+    from 'README.md'
+    archiveName = "combinelimit-${version}.zip"
+    destinationDir = file("${buildDir}/dist")
+}
+
+dist.dependsOn jar

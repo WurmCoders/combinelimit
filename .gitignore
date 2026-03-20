@@ -1,0 +1,25 @@
+# Build
+build/
+out/
+*.class
+
+# Gradle
+.gradle/
+gradle/
+gradlew
+gradlew.bat
+
+# IDE
+.idea/
+*.iml
+.vscode/
+.settings/
+.project
+.classpath
+
+# OS
+.DS_Store
+Thumbs.db
+
+# WU libs (not redistributable)
+libs/
